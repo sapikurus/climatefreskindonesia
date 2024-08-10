@@ -11,45 +11,38 @@
     </style>
 </head>
 <body>
-    <h1>Exhibition Sign-up</h1>
-    <form id="signupForm">
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="text" id="organization" placeholder="Organization" required>
-        <input type="email" id="email" placeholder="Email" required>
+    <h1>Climate Fresk Indonesia - Connect with us!</h1>
+    <form id="data-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="organization">Organization:</label>
+        <input type="text" id="organization" name="organization"><br>   
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
         <button type="submit">Submit</button>
-    </form>
+      </form>   
+
     <p id="message"></p>
 
     <script>
-        const form = document.getElementById('signupForm');
-        const message = document.getElementById('message');
+    const form = document.getElementById('data-form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent default form submission
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
+      const data = {
+        name: document.getElementById('name').value,
+        organization: document.getElementById('organization').value,
+        email: document.getElementById('email').value,   
 
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbx_d5IS1IAyfiTnkPATGJA06sdukI-xLNnJKH37sChHjH46GSDA-PIuWOLU2jFKaNyh/exec', {
-                      method: 'POST',
-                      body: JSON.stringify(data),
-                      headers: {
-                        'Content-Type': 'application/json'
-                          },
-                      mode: 'cors',
-                      credentials: 'include'
-                    });
+      };
 
-                if (response.ok) {
-                    message.textContent = 'Thank you for signing up!';
-                    form.reset();
-                } else {
-                    throw new Error('Submission failed');
-                }
-            } catch (error) {
-                message.textContent = 'An error occurred. Please try again.';
-            }
-        });
-    </script>
-</body>
-</html>
+      fetch('https://script.google.com/macros/s/AKfycbyLE1hCJi2wrxnXJ5lNAzsOdPwwUNZH3bTx7YONkQHVf7s5lalCrKkosT8Ee7zmWDF3nw/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(response => response.text())
+        .then(text => {
+          alert(text);   
+ // Display a success message (optional)
+          form.reset(); // Clear the form after successful submission
