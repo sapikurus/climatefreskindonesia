@@ -30,13 +30,15 @@
             const data = Object.fromEntries(formData);
 
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbyRlZjpqvAXq17kKn2RfaSq9Rhum7a48DPqC71V4thVQh9y5A_quClpcvqC2_zg9uVu/exec', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbx_d5IS1IAyfiTnkPATGJA06sdukI-xLNnJKH37sChHjH46GSDA-PIuWOLU2jFKaNyh/exec', {
+                      method: 'POST',
+                      body: JSON.stringify(data),
+                      headers: {
                         'Content-Type': 'application/json'
-                    }
-                });
+                          },
+                      mode: 'cors',
+                      credentials: 'include'
+                    });
 
                 if (response.ok) {
                     message.textContent = 'Thank you for signing up!';
